@@ -19,7 +19,7 @@ function Search() {
       setLoadingSuggestiona(true);
       try {
         const res = await axios.get(
-          `http://api.weatherapi.com/v1/search.json?key=${APIkey}&q=${e.target.value}`
+          `https://api.weatherapi.com/v1/search.json?key=${APIkey}&q=${e.target.value}`
         );
         const data = res.data;
         setSuggestions(data);
