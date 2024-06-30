@@ -1,6 +1,7 @@
 import React, { createContext, useState } from "react";
 import axios from "axios";
 import APIkey from "../APIkey";
+import { proxyUrl } from "../APIkey";
 
 function takeLaterHrsInCurrentDay(currentTime, currentDayForecast) {
   const currentHrs = Number(currentTime.split(" ")[1].slice(0, 2));
@@ -36,7 +37,8 @@ function ContextProvider({ children }) {
     setForecast(null);
     try {
       const res = await axios.get(
-        `https://api.weatherapi.com/v1/forecast.json?key=${APIkey}&q=${city}&days=10`
+        proxyUrl +
+          `https://api.weatherapi.com/v1/forecast.json?key=${APIkey}&q=${city}&days=10`
       );
       const data = res.data;
       setForecast(data.forecast.forecastday);
@@ -55,7 +57,8 @@ function ContextProvider({ children }) {
     setIsDay(true);
     try {
       const res = await axios.get(
-        `https://api.weatherapi.com/v1/current.json?key=${APIkey}&q=${city}`
+        proxyUrl +
+          `https://api.weatherapi.com/v1/current.json?key=${APIkey}&q=${city}`
       );
       const data = res.data;
       isGeolocationWeather && setUserCurrentWeather(data.current);

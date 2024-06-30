@@ -3,6 +3,7 @@ import { Context } from "../context/Context";
 import AutoSuggestion from "./AutoSuggestion";
 import APIkey from "../APIkey";
 import axios from "axios";
+import { proxyUrl } from "../APIkey";
 
 function Search() {
   const { query, setQuery } = useContext(Context);
@@ -19,7 +20,8 @@ function Search() {
       setLoadingSuggestiona(true);
       try {
         const res = await axios.get(
-          `https://api.weatherapi.com/v1/search.json?key=${APIkey}&q=${e.target.value}`
+          proxyUrl +
+            `https://api.weatherapi.com/v1/search.json?key=${APIkey}&q=${e.target.value}`
         );
         const data = res.data;
         setSuggestions(data);
