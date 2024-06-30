@@ -36,7 +36,7 @@ function ContextProvider({ children }) {
     setForecast(null);
     try {
       const res = await axios.get(
-        `http://api.weatherapi.com/v1/forecast.json?key=${APIkey}&q=${city}&days=10`
+        `https://api.weatherapi.com/v1/forecast.json?key=${APIkey}&q=${city}&days=10`
       );
       const data = res.data;
       setForecast(data.forecast.forecastday);
@@ -55,7 +55,7 @@ function ContextProvider({ children }) {
     setIsDay(true);
     try {
       const res = await axios.get(
-        `http://api.weatherapi.com/v1/current.json?key=${APIkey}&q=${city}`
+        `https://api.weatherapi.com/v1/current.json?key=${APIkey}&q=${city}`
       );
       const data = res.data;
       isGeolocationWeather && setUserCurrentWeather(data.current);
