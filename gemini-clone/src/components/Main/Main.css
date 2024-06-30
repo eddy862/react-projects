@@ -1,0 +1,149 @@
+.main {
+  padding-bottom: 15vh;
+}
+
+.main .nav img {
+  width: 40px;
+}
+
+.main-container {
+  max-width: 900px;
+}
+
+.greet {
+  font-weight: 600;
+}
+
+.greet span {
+  background: -webkit-linear-gradient(16deg, #4b90ff, #ff5546);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card {
+  height: 200px;
+  line-height: 24px;
+}
+
+.card img {
+  width: 40px;
+  padding: 5px;
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  bottom: 15px;
+  right: 15px;
+}
+
+.card p {
+  font-size: 17px;
+}
+
+.main-bottom {
+  max-width: 900px;
+  bottom: -4%;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.search-box img {
+  width: 45px;
+  cursor: pointer;
+}
+
+.result {
+  padding: 0 5%;
+}
+
+.result-container {
+  max-height: 70vh;
+}
+
+.result-container::-webkit-scrollbar {
+  display: none;
+}
+
+.result-title img, .result-data img {
+  width: 40px;
+  border-radius: 50%;
+}
+
+.loader hr {
+  border-radius: 4px;
+  border: none;
+  background-color: #f6f7f8;
+  background: linear-gradient(to right, #9ed7ff, #ffffff, #9ed7ff);
+  background-size: 800px 50px;
+  height: 20px;
+  animation: loader 3s infinite linear;
+}
+
+@keyframes loader {
+  0% {
+    background-position: -800px 0px;
+  }
+  100% {
+    background-position: 800px 0px;
+  }
+}
+
+.result-data {
+  line-height: 1.8;
+}
+
+.result-content {
+  animation: fadedown 2s ease-in-out forwards;
+  overflow: hidden;
+  max-height: 0;
+}
+
+@keyframes fadedown {
+  0% {
+    opacity: 0;
+    max-height: 0;
+  }
+  100% {
+    opacity: 1;
+    max-height: 150vh;
+  }
+}
+
+.search-img .tooltip-text, .input-img .tooltip-text, .dark-btn .tooltip-text {
+  font-size: 12px;
+  z-index: 5;
+  bottom: -70%;
+  left: 50%;
+  transform: translateX(-50%);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+}
+
+.search-img:hover .tooltip-text, .input-img:hover .tooltip-text, .dark-btn:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.dark-btn .tooltip-text {
+  bottom: -85%;
+}
+
+.input-img img {
+  cursor: default;
+}
+
+.input-img .tooltip-text {
+  bottom: -130%;
+  width: 180px;
+  white-space: normal;
+}
+
+.cross {
+  visibility: hidden;
+}
+
+.input-img:hover .cross {
+  visibility: visible;
+}

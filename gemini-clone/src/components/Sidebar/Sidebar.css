@@ -1,0 +1,93 @@
+.sidebar {
+  width: 80px;
+  padding: 25px 15px;
+  transition: width 0.3s;
+}
+
+.sidebar.extended {
+  width: 220px;
+}
+
+.new-chat {
+  height: 50px;
+}
+
+.recent div,
+.recent-title {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 1.2s;
+}
+
+.recent div.extended,
+.recent-title.extended {
+  visibility: visible;
+  opacity: 1;
+}
+
+.sidebar img {
+  width: 20px;
+}
+
+.sidebar .new-chat {
+  padding: 10px 15px;
+}
+
+.menu {
+  width: 50px;
+  height: 50px;
+}
+
+.recent-entry p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 80%;
+}
+
+.recent {
+  max-height: 57vh;
+  overflow-y: scroll;
+  width: 200px;
+  position: absolute;
+}
+
+.recent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.recent::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 10px;
+}
+
+.new-chat .tooltip-text,
+.menu .tooltip-text {
+  bottom: -55%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+}
+
+.bottom-item .tooltip-text {
+  top: 50%;
+  transform: translateY(-50%);
+  right: -130%;
+  font-size: 12px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.new-chat:hover .tooltip-text,
+.menu:hover .tooltip-text,
+.bottom-item:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}

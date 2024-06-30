@@ -1,0 +1,13 @@
+.searchCtn {
+  margin: 20px auto;
+  width: fit-content;
+}
+
+.searchCtn input {
+  border: none;
+  border-bottom: 1px solid gray;
+  padding: 10px;
+  width: 300px;
+  outline: none;
+  font-size: 16px;
+}

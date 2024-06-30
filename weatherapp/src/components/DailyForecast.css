@@ -1,0 +1,12 @@
+.forecast-container {
+  height: 60px;
+  transition: height 0.3s;
+}
+
+.forecast-container:hover {
+  height: 84px;
+}
+
+.forecast-container.forecast-clicked {
+  height: 415px;
+}
