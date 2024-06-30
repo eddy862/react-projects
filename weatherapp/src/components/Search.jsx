@@ -21,9 +21,9 @@ function Search() {
       try {
         const res = await axios.get(
           proxyUrl +
-            `https://api.weatherapi.com/v1/search.json?key=${APIkey}&q=${e.target.value}`
+            encodeURIComponent(`https://api.weatherapi.com/v1/search.json?key=${APIkey}&q=${e.target.value}`)
         );
-        const data = res.data;
+        const data = JSON.parse(res.data.contents);
         setSuggestions(data);
         if (data.length === 0) {
           setNoResult(true);

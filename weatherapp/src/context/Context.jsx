@@ -38,9 +38,9 @@ function ContextProvider({ children }) {
     try {
       const res = await axios.get(
         proxyUrl +
-          `https://api.weatherapi.com/v1/forecast.json?key=${APIkey}&q=${city}&days=10`
+          encodeURIComponent(`https://api.weatherapi.com/v1/forecast.json?key=${APIkey}&q=${city}&days=10`)
       );
-      const data = res.data;
+      const data = JSON.parse(res.data.contents);
       setForecast(data.forecast.forecastday);
       setIsForecastClicked(
         data.forecast.forecastday.map((item, index) => ({
@@ -58,9 +58,9 @@ function ContextProvider({ children }) {
     try {
       const res = await axios.get(
         proxyUrl +
-          `https://api.weatherapi.com/v1/current.json?key=${APIkey}&q=${city}`
+          encodeURIComponent(`https://api.weatherapi.com/v1/current.json?key=${APIkey}&q=${city}`)
       );
-      const data = res.data;
+      const data = JSON.parse(res.data.contents);
       isGeolocationWeather && setUserCurrentWeather(data.current);
       setCurrentWeather(data.current);
       data.current.is_day ? setIsDay(true) : setIsDay(false);
