@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const apiKey = "AIzaSyDRqs_xnfD2DaFvq1bqi5_JoLOm_F748ew";
+const apiKey = "AIzaSyA3KWOZlALvob1eUP8fFBxpYc3cmW7pgXQ";
 const genAI = new GoogleGenerativeAI(apiKey);
 
 const model = genAI.getGenerativeModel({
@@ -45,6 +45,7 @@ export async function run(prompt, msgHistory, file) {
     img[0] = await fileToGenerativePart(file);
     result = await model.generateContent([prompt, ...img]);
   } else {
+    console.log("run")
     const chatSession = model.startChat({
       generationConfig,
       history: hist,
