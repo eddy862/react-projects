@@ -1,11 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Home from "./components/Home";
+import Search from "./components/Search";
+import Favourite from "./components/Favourite";
+import MovieDetails from "./components/MovieDetails";
+import Layout from "./components/Layout";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div>
-      
-    </div>
+    <Router>
+      <Header />
+      <Layout>
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/favorites" element={<Favourite />} />
+            <Route path="/movie/:movieId" element={<MovieDetails />} />
+        </Routes>
+      </Layout>
+    </Router>
   );
-}
+};
 
 export default App;
