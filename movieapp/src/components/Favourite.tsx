@@ -39,7 +39,7 @@ const Favourite: React.FC = (props: Props) => {
               key={index}
               className="flex items-center mb-5 bg-white rounded-xl overflow-hidden shadow-lg h-52"
             >
-              <div className="w-36 overflow-hidden">
+              <div className="w-36 h-full overflow-hidden">
                 <img
                   className="w-full h-full object-cover"
                   src={movie.imgUrl}
