@@ -39,19 +39,12 @@ const Form: React.FC<Props> = ({ setInput, input }: Props) => {
     }
   };
 
-  const handleSubmit = (
-    e: FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>
-  ): void => {
-    e.preventDefault();
-    setInput("");
-  };
-
   const handleEnterInput = (e: ChangeEvent<HTMLInputElement>) => {
-    const input = e.target.value;
-    setInput(input);
+    const query = e.target.value;
+    setInput(query);
 
-    if (input.trim().length >= 4) {
-      fetchSuggestion(input);
+    if (query.trim().length >= 4) {
+      fetchSuggestion(query);
     } else {
       setSuggestion([]);
       setLoadingSuggestions(false);
@@ -61,11 +54,11 @@ const Form: React.FC<Props> = ({ setInput, input }: Props) => {
 
   return (
     <div className="relative flex justify-center">
-      <form action="" className="flex relative" onSubmit={handleSubmit}>
+      <form action="" className="flex relative">
         <input
           type="text"
-          placeholder="Enter movie name"
-          className="outline-none px-4 py-2 w-96 rounded-full border-2 border-emerald-500"
+          placeholder="Enter movie title"
+          className="outline-none px-4 py-2 rounded-full border-2 border-emerald-400 focus:outline-4 focus:outline-sky-400 focus:outline-offset-0 bg-transparent"
           value={input}
           onChange={handleEnterInput}
         />
@@ -86,8 +79,12 @@ const Form: React.FC<Props> = ({ setInput, input }: Props) => {
       </form>
       <AutoSuggestion
         suggestions={suggestions}
+        setSuggestion={setSuggestion}
         loadingSuggestions={loadingSuggestions}
+        setLoadingSuggestions={setLoadingSuggestions}
         noSuggestions={noSuggestions}
+        setNoSuggestions={setNoSuggestions}
+        setInput={setInput}
       />
     </div>
   );
