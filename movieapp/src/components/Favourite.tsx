@@ -10,7 +10,7 @@ type Props = {};
 
 type Filter = "Date Added" | "Release Date" | "Rating";
 
-const Favourite: React.FC = (props: Props) => {
+const Favourite: React.FC = ({}: Props) => {
   //check context and handle remove items
   const context = useContext(Context);
 
@@ -60,8 +60,8 @@ const Favourite: React.FC = (props: Props) => {
 
   const orderByRating = (ascending: boolean= true) => {
     const sortedList = favorites?.sort((a, b) => {
-      const ratingA = a.rate ? parseFloat(a.rate) : 0;
-      const ratingB = b.rate ? parseFloat(b.rate) : 0;
+      const ratingA = a.rate && a.rate !== "N/A" ? parseFloat(a.rate) : 0;
+      const ratingB = b.rate && b.rate !== "N/A" ? parseFloat(b.rate) : 0;
 
       return ascending ? ratingA - ratingB : ratingB - ratingA;
     });
@@ -92,7 +92,7 @@ const Favourite: React.FC = (props: Props) => {
   return (
     <>
       {favorites?.length === 0 || favorites === undefined ? (
-        <p>No favorite movies</p>
+        <p className="text-xl font-semibold">No favorite movies</p>
       ) : (
         <div className="w-full h-full">
           <div className="flex items-center justify-between mb-3">

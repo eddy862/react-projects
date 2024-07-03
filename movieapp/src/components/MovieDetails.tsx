@@ -34,7 +34,7 @@ type Movie = {
   imdbVotes: string;
 };
 
-function MovieDetails({}: Props) {
+const MovieDetails: React.FC = ({}: Props) => {
   const [loading, setLoading] = useState(false);
   const [movie, setMovie] = useState<Movie | undefined>(undefined);
 
