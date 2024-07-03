@@ -47,15 +47,26 @@ const AutoSuggestion: React.FC<Props> = ({
     setInput("");
     setShowHistory(false);
 
-    if (!history?.some((item) => item.id === id)) {
-      const newHist: History = { id: id, title: title, year: year };
+    const newHist: History = { id: id, title: title, year: year };
+    const index = history?.findIndex((item) => item.id === newHist.id);
+    if (history === undefined || index === -1) {
       setHistory((prev) => {
         if (!prev) {
           return [newHist];
         }
 
-        return prev.length === 10 ? [...prev.slice(1), newHist] : [...prev, newHist];
+        return prev.length === 10
+          ? [newHist, ...prev.slice(0, -1)]
+          : [newHist, ...prev];
       });
+    }
+
+    if (index !== -1 && index !== undefined && history !== undefined) {
+      setHistory([
+        newHist,
+        ...history.slice(0, index),
+        ...history.slice(index + 1),
+      ]);
     }
   };
 
