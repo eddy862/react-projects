@@ -1,6 +1,7 @@
-import React, { ChangeEvent, FormEvent, MouseEvent, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AutoSuggestion from "./AutoSuggestion";
+import useDebounce from "../hook/useDebounce";
 
 type Props = {
   input: string;
@@ -20,37 +21,35 @@ const Form: React.FC<Props> = ({ setInput, input }: Props) => {
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
   const [noSuggestions, setNoSuggestions] = useState(false);
 
-  const fetchSuggestion = async (query: string): Promise<void> => {
-    setLoadingSuggestions(true);
-    setNoSuggestions(false);
+  const debouncedQuery = useDebounce(input, 500);
 
-    try {
-      const res = await axios.get(
-        `https://www.omdbapi.com/?apikey=1685660f&s=${query}`
-      );
-      const data: Search[] | undefined = res.data.Search;
-      console.log(data);
-      setSuggestion(data);
-      data === undefined && setNoSuggestions(true);
-    } catch (err) {
-      console.error("Error fetching suggestion: ", err);
-    } finally {
-      setLoadingSuggestions(false);
-    }
-  };
+  useEffect(() => {
+    const fetchSuggestion = async (query: string): Promise<void> => {
+      setLoadingSuggestions(true);
+      setNoSuggestions(false);
 
-  const handleEnterInput = (e: ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value;
-    setInput(query);
+      try {
+        const res = await axios.get(
+          `https://www.omdbapi.com/?apikey=1685660f&s=${query}`
+        );
+        const data: Search[] | undefined = res.data.Search;
+        setSuggestion(data);
+        data === undefined && setNoSuggestions(true);
+      } catch (err) {
+        console.error("Error fetching suggestion: ", err);
+      } finally {
+        setLoadingSuggestions(false);
+      }
+    };
 
-    if (query.trim().length >= 4) {
-      fetchSuggestion(query);
+    if (debouncedQuery.trim().length >= 4) {
+      fetchSuggestion(debouncedQuery);
     } else {
       setSuggestion([]);
       setLoadingSuggestions(false);
       setNoSuggestions(false);
     }
-  };
+  }, [debouncedQuery]);
 
   return (
     <div className="relative flex justify-center">
@@ -60,7 +59,7 @@ const Form: React.FC<Props> = ({ setInput, input }: Props) => {
           placeholder="Enter movie title"
           className="outline-none px-4 py-2 rounded-full border-2 border-emerald-400 focus:outline-4 focus:outline-sky-400 focus:outline-offset-0 bg-transparent"
           value={input}
-          onChange={handleEnterInput}
+          onChange={(e) => setInput(e.target.value)}
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -135,7 +135,8 @@ function MovieDetails({}: Props) {
                       release: movie?.Released,
                       year: movie?.Year,
                       id: movie?.imdbID,
-                      imgUrl: movie?.Poster
+                      imgUrl: movie?.Poster,
+                      date: new Date()
                     })
                   }
                   disabled={movieExistInFavs(movie?.imdbID)}

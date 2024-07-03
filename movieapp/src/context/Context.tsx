@@ -17,6 +17,7 @@ export type Favorite = {
   year: string | undefined;
   rate: string | undefined;
   imgUrl: string | undefined;
+  date: Date;
 }
 
 export const Context = createContext<ContextValue | undefined>(undefined);

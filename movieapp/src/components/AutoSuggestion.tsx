@@ -37,7 +37,7 @@ const AutoSuggestion: React.FC<Props> = ({
     <div className="absolute top-10 min-w-full bg-slate-900 rounded-b-md text-white">
       {!loadingSuggestions ? (
         !noSuggestions ? (
-          <ul className="divide-y-2 divide-slate-600">
+          <ul className="divide-y-2 divide-slate-600 z-50">
             {suggestions?.map((suggestion) => (
               <li
                 className="py-2 px-4 hover:bg-slate-700 cursor-pointer"
