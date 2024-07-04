@@ -6,6 +6,7 @@ import Favourite from "./components/Favourite";
 import MovieDetails from "./components/MovieDetails";
 import Layout from "./components/Layout";
 import Genres from "./components/Genres";
+import GenreDetail from "./components/GenreDetail";
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
             <Route path="/genres" element={<Genres />} />
             <Route path="/favorites" element={<Favourite />} />
             <Route path="/movie/:movieId" element={<MovieDetails />} />
+            <Route path="/genre/:genreName" element={<GenreDetail />} />
         </Routes>
       </Layout>
     </Router>

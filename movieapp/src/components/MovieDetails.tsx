@@ -8,7 +8,7 @@ import { type Favorite } from "../context/Context";
 
 type Props = {};
 
-type Movie = {
+export type Movie = {
   Actors: string;
   Awards: string;
   BoxOffice: string;

@@ -11,7 +11,7 @@ type Props = {};
 type Filter = "Date Added" | "Release Date" | "Rating";
 
 const Favourite: React.FC = ({}: Props) => {
-  //check context and handle remove items
+  //check context and handle removing items
   const context = useContext(Context);
 
   if (!context) {
@@ -20,14 +20,14 @@ const Favourite: React.FC = ({}: Props) => {
 
   const { favorites, setFavorites } = context;
 
-  //handle open filter menu
+  //handle toggling filter menu
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClickFilter = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  //order logics
+  //handle order logics
   const orderByDate = (ascending: boolean = true) => {
     const sortedList = favorites?.sort((a, b) => {
       const dateA = new Date(a.date).getTime();

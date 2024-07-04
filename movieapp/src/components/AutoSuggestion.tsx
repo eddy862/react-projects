@@ -1,20 +1,13 @@
-import React, { useContext } from "react";
-import { Search } from "./Form";
+import React from "react";
+import { type Search } from "./Form";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import { useNavigate } from "react-router-dom";
-import { Context } from "../context/Context";
-import { type History } from "../context/Context";
 
 type Props = {
   suggestions: Search[] | undefined;
-  setSuggestion: React.Dispatch<React.SetStateAction<Search[] | undefined>>;
   loadingSuggestions: boolean;
-  setLoadingSuggestions: React.Dispatch<React.SetStateAction<boolean>>;
   noSuggestions: boolean;
-  setNoSuggestions: React.Dispatch<React.SetStateAction<boolean>>;
-  setInput: React.Dispatch<React.SetStateAction<string>>;
-  setShowHistory: React.Dispatch<React.SetStateAction<boolean>>;
+  clickItem: (id: string, title: string, year: string) => void;
   refer: React.RefObject<HTMLDivElement>;
 };
 
@@ -22,54 +15,9 @@ const AutoSuggestion: React.FC<Props> = ({
   suggestions,
   loadingSuggestions,
   noSuggestions,
-  setLoadingSuggestions,
-  setSuggestion,
-  setNoSuggestions,
-  setInput,
-  setShowHistory,
+  clickItem,
   refer,
 }: Props) => {
-  const context = useContext(Context);
-
-  if (!context) {
-    return <div>Context is not available</div>;
-  }
-
-  const { setHistory, history } = context;
-
-  const navigate = useNavigate();
-
-  const handleSelect = (id: string, title: string, year: string) => {
-    navigate(`/movie/${id}`);
-    setLoadingSuggestions(false);
-    setSuggestion([]);
-    setNoSuggestions(false);
-    setInput("");
-    setShowHistory(false);
-
-    const newHist: History = { id: id, title: title, year: year };
-    const index = history?.findIndex((item) => item.id === newHist.id);
-    if (history === undefined || index === -1) {
-      setHistory((prev) => {
-        if (!prev) {
-          return [newHist];
-        }
-
-        return prev.length === 10
-          ? [newHist, ...prev.slice(0, -1)]
-          : [newHist, ...prev];
-      });
-    }
-
-    if (index !== -1 && index !== undefined && history !== undefined) {
-      setHistory([
-        newHist,
-        ...history.slice(0, index),
-        ...history.slice(index + 1),
-      ]);
-    }
-  };
-
   return (
     <div
       className="absolute top-10 min-w-full bg-slate-900 rounded-b-md text-white"
@@ -83,7 +31,7 @@ const AutoSuggestion: React.FC<Props> = ({
                 className="py-2 px-4 hover:bg-slate-700 cursor-pointer text-nowrap"
                 key={suggestion.imdbID}
                 onClick={() =>
-                  handleSelect(
+                  clickItem(
                     suggestion.imdbID,
                     suggestion.Title,
                     suggestion.Year

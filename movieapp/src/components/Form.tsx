@@ -1,8 +1,11 @@
-import React, { ChangeEvent, useEffect, useState, useRef } from "react";
+import React, { ChangeEvent, useEffect, useState, useRef, useContext } from "react";
 import axios from "axios";
 import AutoSuggestion from "./AutoSuggestion";
 import useDebounce from "../hook/useDebounce";
-import History from "./History";
+import HistoryList from "./HistoryList";
+import { useNavigate } from "react-router-dom";
+import { Context } from "../context/Context";
+import { type History } from "../context/Context";
 
 type Props = {
   input: string;
@@ -23,7 +26,8 @@ const Form: React.FC<Props> = ({ setInput, input }: Props) => {
   const [noSuggestions, setNoSuggestions] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
 
-  const debouncedQuery = useDebounce(input, 500);
+  //after user stop typing for certain time, start fetching suggestion
+  const debouncedQuery = useDebounce(input, 600);
 
   useEffect(() => {
     const fetchSuggestion = async (query: string): Promise<void> => {
@@ -62,6 +66,7 @@ const Form: React.FC<Props> = ({ setInput, input }: Props) => {
     }
   };
 
+  //remove the suggestion and history when click outside
   const sugRef = useRef<HTMLDivElement>(null);
   const histRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -86,6 +91,48 @@ const Form: React.FC<Props> = ({ setInput, input }: Props) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  //handle click history or suggestion items
+  const context = useContext(Context);
+  
+  if (!context) {
+    return <div>Context is not available</div>;
+  }
+
+  const { setHistory, history } = context;
+
+  const navigate = useNavigate();
+
+  const handleSelect = (id: string, title: string, year: string) => {
+    navigate(`/movie/${id}`);
+    setLoadingSuggestions(false);
+    setSuggestion([]);
+    setNoSuggestions(false);
+    setInput("");
+    setShowHistory(false);
+
+    const newHist: History = { id: id, title: title, year: year };
+    const index = history?.findIndex((item) => item.id === newHist.id);
+    if (history === undefined || index === -1) {
+      setHistory((prev) => {
+        if (!prev) {
+          return [newHist];
+        }
+
+        return prev.length === 10
+          ? [newHist, ...prev.slice(0, -1)]
+          : [newHist, ...prev];
+      });
+    }
+
+    if (index !== -1 && index !== undefined && history !== undefined) {
+      setHistory([
+        newHist,
+        ...history.slice(0, index),
+        ...history.slice(index + 1),
+      ]);
+    }
+  };
 
   return (
     <div className="relative flex justify-center">
@@ -116,16 +163,16 @@ const Form: React.FC<Props> = ({ setInput, input }: Props) => {
       </form>
       <AutoSuggestion
         suggestions={suggestions}
-        setSuggestion={setSuggestion}
         loadingSuggestions={loadingSuggestions}
-        setLoadingSuggestions={setLoadingSuggestions}
         noSuggestions={noSuggestions}
-        setNoSuggestions={setNoSuggestions}
-        setInput={setInput}
-        setShowHistory={setShowHistory}
         refer={sugRef}
+        clickItem={handleSelect}
       />
-      <History showHistory={showHistory} refer={histRef}/>
+      <HistoryList
+        showHistory={showHistory}
+        clickItem={handleSelect}
+        refer={histRef}
+      />
     </div>
   );
 };

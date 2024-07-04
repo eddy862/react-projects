@@ -4,9 +4,14 @@ import { Context } from "../context/Context";
 type Props = {
   showHistory: boolean;
   refer: React.RefObject<HTMLDivElement>;
+  clickItem: (id: string, title: string, year: string) => void;
 };
 
-const History: React.FC<Props> = ({ showHistory, refer }: Props) => {
+const HistoryList: React.FC<Props> = ({
+  showHistory,
+  refer,
+  clickItem,
+}: Props) => {
   const context = useContext(Context);
 
   if (!context) {
@@ -30,6 +35,7 @@ const History: React.FC<Props> = ({ showHistory, refer }: Props) => {
               <li
                 key={history.id}
                 className="py-2 px-4 hover:bg-slate-700 cursor-pointer text-nowrap"
+                onClick={() => clickItem(history.id, history.title, history.year)}
               >
                 {history.title}
                 <span className="text-sm text-slate-300 ml-3">
@@ -44,4 +50,4 @@ const History: React.FC<Props> = ({ showHistory, refer }: Props) => {
   );
 };
 
-export default History;
+export default HistoryList;
