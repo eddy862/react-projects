@@ -124,6 +124,7 @@ const GenreDetail: React.FC = ({}: Props) => {
     value: number
   ) => {
     setCurrentPage(value);
+    event;
   };
 
   return (

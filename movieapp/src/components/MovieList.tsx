@@ -2,7 +2,7 @@ import React from 'react'
 
 type Props = {}
 
-const MovieList: React.FC = (props: Props) => {
+const MovieList: React.FC = ({}: Props) => {
   return (
     <div>MovieList</div>
   )
