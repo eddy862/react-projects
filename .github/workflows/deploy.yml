@@ -11,7 +11,7 @@ jobs:
     
     strategy:
       matrix:
-        project: [foodapp, gemini-clone, todoapp, weatherapp]
+        project: [foodapp, gemini-clone, todoapp, weatherapp, movieapp]
 
     steps:
       - name: Checkout repository
