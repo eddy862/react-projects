@@ -33,7 +33,7 @@ const FavoriteCard: React.FC<Props> = ({ movie }: Props) => {
 
   return (
     <div
-      className="flex items-center mb-4 bg-white rounded-xl overflow-hidden shadow-lg h-52"
+      className="flex items-center mb-4 bg-white rounded-xl overflow-hidden shadow-lg h-52 text-sm md:text-base"
     >
       <div className="w-36 h-full overflow-hidden">
         <img className="w-full h-full object-cover" src={movie.imgUrl} alt="" />
@@ -43,7 +43,7 @@ const FavoriteCard: React.FC<Props> = ({ movie }: Props) => {
           <div className="pr-4 font-semibold">{movie.rate}/10</div>
           <div className="pl-4">
             <div
-              className="font-bold text-lg hover:text-blue-500 cursor-pointer"
+              className="font-bold text-base md:text-lg hover:text-blue-500 cursor-pointer"
               onClick={() => handleClickTitle(movie.id)}
             >
               {movie.title} ({movie.year})

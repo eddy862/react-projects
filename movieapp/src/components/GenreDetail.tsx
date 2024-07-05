@@ -3,13 +3,13 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { type Movie } from "./MovieDetails";
 import GenreMovieCard from "./GenreMovieCard";
-import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
+import GenreDetailSkeleton from "./GenreDetailSkeleton";
 
 const genreKeywords: Record<Genre, string[]> = {
-  action: ["action", "fight", "battle"],
-  comedy: ["comedy", "funny", "humor"],
+  action: ["action", "fight", "battle", "war"],
+  comedy: ["comedy", "funny", "humor", "laugh"],
   drama: ["drama", "serious", "emotional"],
   horror: ["horror", "scary", "fear"],
   romance: ["romance", "love", "relationship"],
@@ -43,8 +43,10 @@ const removeLetter = (str: string, letter: string): string => {
   return str.replace(regex, "");
 };
 
-const GenreDetail: React.FC = (props: Props) => {
+const GenreDetail: React.FC = ({}: Props) => {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [allMovieLoaded, setAllMovieLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const moviesPerPage = 10;
 
@@ -61,35 +63,49 @@ const GenreDetail: React.FC = (props: Props) => {
     const fetchMovieByGenre = async (genre: Genre) => {
       const keywords = genreKeywords[genre];
       let movies: any[] = [];
+      setLoading(true);
 
-      for (const keyword of keywords) {
-        const res = await axios.get(
-          `https://www.omdbapi.com/?apikey=1685660f&s=${keyword}`
-        );
-        const data = res.data.Search;
-        movies = [...movies, data];
+      try {
+        for (const keyword of keywords) {
+          const res = await axios.get(
+            `https://www.omdbapi.com/?apikey=1685660f&s=${keyword}`
+          );
+          const data = res.data.Search;
+          movies = [...movies, data];
+        }
+      } catch (err) {
+        console.error("Error fetching movies by genre: ", err);
+      } finally {
+        setLoading(false);
       }
 
       return movies;
     };
 
     const filterMoviesByExactGenre = async (movies: any[], genre: string) => {
-      for (const moviesArray of movies) {
-        for (const movie of moviesArray) {
-          const res = await axios.get(
-            `https://www.omdbapi.com/?apikey=1685660f&i=${movie.imdbID}`
-          );
-          const data: Movie = res.data;
+      setAllMovieLoaded(false);
+      try {
+        for (const moviesArray of movies) {
+          for (const movie of moviesArray) {
+            const res = await axios.get(
+              `https://www.omdbapi.com/?apikey=1685660f&i=${movie.imdbID}`
+            );
+            const data: Movie = res.data;
 
-          if (
-            removeLetter(data.Genre, "-")
-              .toLowerCase()
-              .split(", ")
-              .includes(genre)
-          ) {
-            setMovies((prev) => [...prev, data]);
+            if (
+              removeLetter(data.Genre, "-")
+                .toLowerCase()
+                .split(", ")
+                .includes(genre)
+            ) {
+              setMovies((prev) => [...prev, data]);
+            }
           }
         }
+      } catch (err) {
+        console.error("Error filtering movies by exact genre: ", err);
+      } finally {
+        setAllMovieLoaded(true)
       }
     };
 
@@ -111,21 +127,30 @@ const GenreDetail: React.FC = (props: Props) => {
   };
 
   return (
-    <div className="w-full h-full">
-      <div className="capitalize text-2xl font-bold mb-3">
-        {genreName} Movies
+    <>
+      <div className="w-full h-full">
+        <div className="capitalize text-2xl font-bold mb-3">
+          {genreName} Movies
+        </div>
+        <Typography className="h-8">Page: {currentPage}</Typography>
+        {loading ? (
+          <GenreDetailSkeleton />
+        ) : (
+          <>
+            {currentMovies.map((movie, index) => (
+              <GenreMovieCard key={index} movie={movie} />
+            ))}
+            {!allMovieLoaded && movies.length < indexOfLastMovie && <GenreDetailSkeleton />}
+            <Pagination
+              className="h-14 flex items-start justify-center"
+              count={totalPages}
+              page={currentPage}
+              onChange={handleChangePage}
+            />
+          </>
+        )}
       </div>
-      <Typography className="h-8">Page: {currentPage}</Typography>
-      {currentMovies.map((movie, index) => (
-        <GenreMovieCard key={index} movie={movie} />
-      ))}
-      <Pagination
-        className="h-14 flex items-start justify-center"
-        count={totalPages}
-        page={currentPage}
-        onChange={handleChangePage}
-      />
-    </div>
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 import { Context } from "../context/Context";
 import { type Favorite } from "../context/Context";
+import LoadingMovieDetails from "./LoadingMovieDetails";
 
 type Props = {};
 
@@ -89,17 +90,17 @@ const MovieDetails: React.FC = ({}: Props) => {
   return (
     <>
       {loading ? (
-        <p>Loading...</p>
+        <LoadingMovieDetails/>
       ) : (
         <div className="w-full h-full">
           <div
-            className="flex gap-10 p-6 rounded-xl"
+            className="flex flex-col md:flex-row items-center md:items-start gap-10 p-6 rounded-xl"
             style={{ backgroundColor: "rgba(255, 255, 255, 0.5)" }}
           >
             <div className="w-80">
               <img className="rounded-lg" src={movie?.Poster} alt="" />
             </div>
-            <div className="inline-flex flex-col flex-1 gap-2">
+            <div className="inline-flex flex-col flex-1 gap-4">
               <div className="text-3xl font-bold">
                 {movie?.Title}{" "}
                 <span className="font-semibold text-gray-500">
@@ -161,7 +162,7 @@ const MovieDetails: React.FC = ({}: Props) => {
             </div>
           </div>
           <div className="flex flex-col mt-6 gap-6 p-6 rounded-xl bg-white">
-            <div className="grid grid-cols-3 gap-y-2">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
               <div>
                 <div className="font-bold">Country</div>
                 <div>{movie?.Country}</div>

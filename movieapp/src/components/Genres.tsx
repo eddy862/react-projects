@@ -67,11 +67,11 @@ const genres: {name: Genre, poster: string}[] = [
   },
 ];
 
-const Genres: React.FC = (props: Props) => {
+const Genres: React.FC = ({}: Props) => {
   return (
     <div className="h-full w-full">
       <div className="text-2xl font-bold mb-4">Genres</div>
-      <ul className="grid grid-cols-4 gap-5">
+      <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 xl:grid-cols-5">
         {genres.map((genre, index) => (
           <Link to={`/genre/${genre.name.toLowerCase()}`}>
             <div className="group py-2 bg-white rounded-lg shadow-lg flex flex-col items-center" key={index}>

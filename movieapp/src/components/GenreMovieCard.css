@@ -1,0 +1,14 @@
+.genre-movie-plot {
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  display: -webkit-box;
+  -webkit-box-orient: vertical; 
+  -webkit-line-clamp: 2; 
+  white-space: normal; 
+}
+
+@media (min-width: 768px) {
+  .genre-movie-plot {
+    -webkit-line-clamp: 3; 
+  }
+}

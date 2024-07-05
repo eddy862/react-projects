@@ -135,12 +135,12 @@ const Form: React.FC<Props> = ({ setInput, input }: Props) => {
   };
 
   return (
-    <div className="relative flex justify-center">
+    <div className="relative inline-flex justify-center px-4">
       <form action="" className="flex relative">
         <input
           type="text"
           placeholder="Enter movie title"
-          className="outline-none px-4 py-2 rounded-full border-2 border-emerald-400 focus:outline-4 focus:outline-sky-400 focus:outline-offset-0 bg-transparent"
+          className="outline-none w-full px-4 py-2 rounded-full border-2 border-emerald-400 focus:outline-4 focus:outline-sky-400 focus:outline-offset-0 bg-transparent"
           value={input}
           onChange={handleInputChange}
           onFocus={(e) => e.target.value.length === 0 && setShowHistory(true)}
