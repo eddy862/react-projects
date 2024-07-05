@@ -13,7 +13,7 @@ import ListItemText from "@mui/material/ListItemText";
 
 type Props = {};
 
-const Header: React.FC = (props: Props) => {
+const Header: React.FC = ({}: Props) => {
   const [input, setInput] = useState("");
   const [open, setOpen] = useState(false);
 
