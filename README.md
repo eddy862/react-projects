@@ -81,5 +81,3 @@ Then update code to read from `import.meta.env`.
 - GitHub Pages
 
 ---
-
-If you’re reviewing this repo for hiring: the goal is to demonstrate breadth across small apps (routing, API calls, debouncing, context state, styling approaches) rather than a single monolith.
